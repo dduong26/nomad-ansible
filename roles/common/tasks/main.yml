@@ -1,0 +1,29 @@
+- name: Update apt repo
+  apt:
+    update_cache: yes
+
+- name: Upgrade all packages to the latest version
+  apt:
+    name: "*"
+    state: latest
+
+- name: Install Docker
+  apt:
+    name: docker.io
+    state: latest
+
+- name: Create the user 'ansible' and add to docker group
+  user:
+    name: k8
+    create_home: False
+    shell: /bin/bash
+    groups: docker
+
+- name: Disable swap
+  command: swapoff -a
+  
+- name: Permanently disable swap on fstab
+  replace:
+    path: /etc/fstab
+    regexp: '(.*swap.*)'
+    replace: '#\1'

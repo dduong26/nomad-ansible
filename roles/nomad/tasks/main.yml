@@ -1,0 +1,19 @@
+- name: Add Kubernetes GPG key 
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Kubernetes repository
+  apt_repository: 
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    update_cache: yes
+
+- name: Install Kubernetes
+  apt:
+    pkg:
+      - kubeadm=1.16.3-00
+      - kubelet=1.16.3-00
+      - kubectl=1.16.3-00
+
+- name: Mark packages on hold
+  command: apt-mark hold kubelet kubeadm kubectl

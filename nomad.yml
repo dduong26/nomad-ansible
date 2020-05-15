@@ -1,0 +1,8 @@
+---
+- name: Setting Nomad agents
+  hosts: nomad
+  remote_user: ansible
+  become: yes
+  roles:
+    - common
+    - nomad
